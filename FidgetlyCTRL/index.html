@@ -1,30 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Fidgetly Ctrl Pitch/Roll/Yaw Visualiser</title>
-    <style>
-        body{
-            font-family: Helvetica;
-            text-align:center;
-        }
-        ol{
-            width:400px;
-            text-align:left;
-            margin:0 auto;
-        }
-    </style>
+    <title>Fidgetly CTRL Data Visualizer</title>
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+    <link href="css/ratchet.css" rel="stylesheet">
+    <script src="js/ratchet.js"></script>
 </head>
 <body>
-    <h1>Fidgetly Ctrl Data Visualizer</h1>
-        Click here: <button id="connect">Connect</button>
-
-    <!-- <canvas data-processing-sources="processing.pde"></canvas> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.2/processing.min.js"></script> -->
     <script>
         //BLE
         let service = '78adb061-470e-405d-a44d-817e559c8839';
-        let characteristic  = 'e779f296-27f6-461b-8f96-6b0c3804bfc3';
+        let characteristicDeviceCustom  = 'e779f296-27f6-461b-8f96-6b0c3804bfc3';       
+        let serviceIdBattery = 'battery_service';
+        let characteristicBatt = 'battery_level';
         let byteLength      = 44;
+
+        let deviceCustomService = null;
+        let batteryService = null;
 
         let revs = 0;
         let acc = [0.0,0.0,0.0];
@@ -48,8 +42,10 @@
                 ]
             })
             .then(device => device.gatt.connect())
+            //.then(server => server.getPrimaryServices(service, serviceBatt))
+            //.then(service => service[0].getCharacteristic(characteristic))
             .then(server => server.getPrimaryService(service))
-            .then(service => service.getCharacteristic(characteristic))
+            .then(service => service.getCharacteristic(characteristicDeviceCustom))
             .then(characteristic => {
                 return characteristic.startNotifications()
                 .then(_ => {
@@ -57,6 +53,16 @@
                                     handleCharacteristicValueChanged);
                 });
             })
+            /*
+            .then(serviceBatt => service[1].getCharacteristic(characteristicBatt))
+            .then(characteristic => {
+                return characteristic.startNotifications()
+                .then(_ => {
+                    characteristic.addEventListener('characteristicvaluechanged',
+                                    handleCharacteristicBattValueChanged);
+                });
+            })
+            */
             .then(_ => {
                 console.log('Notifications have been started.');
             })
@@ -74,13 +80,27 @@
                 orientation = getOrientationFromDeviceAngle(da);
                 spinDirection = getSpinDirectionFromGyroZ(ang[2]);
 
-                document.getElementById("revs").innerHTML = "Revs: " + revs;
-                document.getElementById("acc").innerHTML = "Acceleration mG: " + acc;
-                document.getElementById("ang").innerHTML = "Angular Rate: " + ang;
-                document.getElementById("sc").innerHTML = "Spin Count: " + sc;
-                document.getElementById("orientation").innerHTML = "Orientation: " + orientation;
-                document.getElementById("spinDirection").innerHTML = "Spin Direction: " + spinDirection;
+                document.getElementById("revs").innerHTML =  revs;
+                document.getElementById("accX").innerHTML =  acc[0];
+                document.getElementById("accY").innerHTML =  acc[1];
+                document.getElementById("accZ").innerHTML =  acc[2];
+                document.getElementById("angX").innerHTML =  ang[0];
+                document.getElementById("angY").innerHTML =  ang[1];
+                document.getElementById("angZ").innerHTML = ang[2];
+                document.getElementById("sc").innerHTML =  sc;
+                document.getElementById("orientation").innerHTML = orientation;
+                document.getElementById("spinDirection").innerHTML =  spinDirection;
             }
+
+            function handleCharacteristicBattValueChanged(event){
+                //var buffer = event.target.value.buffer;
+                //var view = new DataView(buffer);
+                battery = event.target.value;
+                document.getElementById("battery").innerHTML =  battery;
+            }
+
+
+
         }
 
 
@@ -132,17 +152,30 @@
             | src[startIndex + 2] << 8
             | src[startIndex + 3];
         }
-
-
     </script>
 
-<p id="revs">Revs: ...</p>
-<p id="acc">Acceleration mG: ...</p>
-<p id="ang">Angular Rate: ...</p>
-<p id="sc">Spin Count: ...</p> 
-<p id="orientation">Orientation: ...</p> 
-<p id="spinDirection">Spin Direction: ...</p> 
+<header class="bar bar-nav">
+  <!--
+  <a class="icon icon-info pull-left" id="battery">100</a>
+-->
+  <a class="icon icon icon-search pull-right" id="connect"></a>
+  <h1 class="title">Fidgetly Ctrl Data Visualizer</h1>
+</header>
 
+<div class="content">
+    <ul class="table-view">
+        <li class="table-view-cell">Revolutions<span class="badge" id="revs">4</span></li>
+        <li class="table-view-cell">Spin Count<span class="badge" id="sc">1</span></li>  
+        <li class="table-view-cell">Spin Count<span class="badge" id="orientation">facingUp</span></li>  
+        <li class="table-view-cell">Spin Direction<span class="badge" id="spinDirection">Counterclockwise</span></li>
+        <li class="table-view-cell">Acc mG X<span class="badge" id="accX">4</span></li>
+        <li class="table-view-cell">Acc mG Y<span class="badge" id="accY">4</span></li>
+        <li class="table-view-cell">Acc mG Z<span class="badge" id="accZ">4</span></li>
+        <li class="table-view-cell">Ang md/s X<span class="badge" id="angX">4</span></li>
+        <li class="table-view-cell">Ang md/s Y<span class="badge" id="angY">4</span></li>
+        <li class="table-view-cell">Ang md/s Z<span class="badge" id="angZ">4</span></li>
+    </ul>
+</div>
 
 
 </body>

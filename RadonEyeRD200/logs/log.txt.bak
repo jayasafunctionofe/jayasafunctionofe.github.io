@@ -1,0 +1,217 @@
+59 / 38
+pC/L = 37 bc/m
+
+==========
+07-10 22:56:42.027 19829 19829 E RD200Manager: mGattCallback - FTLabMeasDataCallBack onMeasStateChanged : [I@4dca3b7
+07-10 22:56:42.028 19829 19829 E ActivityDetail: DataCallBack : 64
+07-10 22:56:42.028 19829 19829 E ActivityDetail: viewModel.getRecBleData : [64, 66, 50, 50, 48, 51, 49, 53, 82, 85, 50, 48, 55, 48, 52, 6, 82, 68, 50, 48, 48, 78, 86, 50, 46, 48, 46, 50, 0, 0, 148, 0, 6, 73, 0, 0, 0, 0, 0, 4, 0, 13, 0, 52, 0, 0, 0, 122, 35, 8, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 41, 92, 79, 63, 102, 102, 134, 63]
+07-10 22:56:42.028 19829 19829 I ActivityDetail: RecCmd : 64
+07-10 22:56:42.029 19829 19829 E ActivityDetail: Rec Total No  : 0,    Rec Pack No : 0,    Rec RecPacketSize : 0
+07-10 22:56:42.029 19829 19829 W ActivityDetail: cmd_BLEV2_QUERY_ALL
+07-10 22:56:42.029 19829 19829 W ActivityDetail:   snDate= 220315  ,  fwversion V2.0.2
+07-10 22:56:42.029 19829 19829 W ActivityDetail:  SN.No =0704 SN.Type =RU2
+07-10 22:56:42.029 19829 19829 W ActivityDetail: modelName =RD200N
+07-10 22:56:42.029 19829 19829 W ActivityDetail: unit = 0
+07-10 22:56:42.029 19829 19829 W ActivityDetail:  alarmStatus 0
+07-10 22:56:42.029 19829 19829 W ActivityDetail:  alarmInterval = 6 alarmValue 148.0
+07-10 22:56:42.029 19829 19829 W ActivityDetail:  PulseCount : 4,    PulseCount 10 min : 13, S_pCi : 73.0, hour : 0, M_pCi : 0.0,   L_pCi : 0.0, peak : 0.0
+07-10 22:56:42.029 19829 19829 W ActivityDetail: , time : 52, DC_Value: 533370 Status : 1, VibStatus : 0 DataNo = 0 log checkSum0
+07-10 22:56:42.029 19829 19829 W ActivityDetail:  factor = 1.05
+
+==========
+07-11 00:51:39.864 19829 19829 E RD200Manager: mGattCallback - FTLabMeasDataCallBack onMeasStateChanged : [I@c9a7fd6
+07-11 00:51:39.864 19829 19829 E ActivityDetail: DataCallBack : 64
+07-11 00:51:39.864 19829 19829 E ActivityDetail: viewModel.getRecBleData : [64, 66, 50, 50, 48, 51, 49, 53, 82, 85, 50, 48, 55, 48, 52, 6, 82, 68, 50, 48, 48, 78, 86, 50, 46, 48, 46, 50, 0, 0, 148, 0, 36, 59, 0, 0, 0, 0, 0, 7, 0, 12, 0, 167, 0, 0, 0, 233, 29, 8, 0, 81, 0, 2, 0, 0, 0, 2, 0, 0, 41, 92, 79, 63, 102, 102, 134, 63]
+
+07-11 02:58:05.079 32517 32517 E ActivityDetail: viewModel.getRecBleData : [64, 66, 50, 50, 48, 51, 49, 53, 82, 85, 50, 48, 55, 48, 52, 6, 82, 68, 50, 48, 48, 78, 86, 50, 46, 48, 46, 50, 0, 0, 148, 0, 36, 34, 0, 0, 0, 0, 0, 0, 0, 3, 0, 37, 1, 0, 0, 151, 14, 8, 0, 81, 0, 2, 1, 0, 0, 4, 0, 0, 41, 92, 79, 63, 102, 102, 134, 63]
+
+
+07-11 00:51:39.864 19829 19829 I ActivityDetail: RecCmd : 64
+07-11 00:51:39.864 19829 19829 E ActivityDetail: Rec Total No  : 2,    Rec Pack No : 4,    Rec RecPacketSize : 8
+07-11 00:51:39.864 19829 19829 W ActivityDetail: cmd_BLEV2_QUERY_ALL
+07-11 00:51:39.864 19829 19829 W ActivityDetail:   snDate= 220315  ,  fwversion V2.0.2
+07-11 00:51:39.864 19829 19829 W ActivityDetail:  SN.No =0704 SN.Type =RU2
+07-11 00:51:39.864 19829 19829 W ActivityDetail: modelName =RD200N
+07-11 00:51:39.864 19829 19829 W ActivityDetail: unit = 0
+07-11 00:51:39.864 19829 19829 W ActivityDetail:  alarmStatus 0
+07-11 00:51:39.864 19829 19829 W ActivityDetail:  alarmInterval = 36 alarmValue 148.0
+07-11 00:51:39.864 19829 19829 W ActivityDetail:  PulseCount : 7,    PulseCount 10min : 12, S_pCi : 59.0, hour : 0, M_pCi : 0.0,   L_pCi : 0.0, peak : 81.0
+07-11 00:51:39.864 19829 19829 W ActivityDetail: , time : 167, DC_Value: 531945 Status : 2, VibStatus : 0 DataNo = 2 log checkSum0
+07-11 00:51:39.864 19829 19829 W ActivityDetail:  factor = 1.05
+
+
+==========
+07-12 06:07:20.742 11437 11437 E RD200Manager: mGattCallback - FTLabMeasDataCallBack onMeasStateChanged : [I@64ce857
+07-12 06:07:20.743 11437 11437 E ActivityDetail: DataCallBack : 64
+07-12 06:07:20.743 11437 11437 E ActivityDetail: viewModel.getRecBleData : [64, 66, 50, 50, 48, 51, 49, 53, 82, 85, 50, 48, 55, 48, 52, 6, 82, 68, 50, 48, 48, 78, 86, 50, 46, 48, 46, 50, 1, 0, 148, 0, 36, 69, 0, 35, 0, 0, 0, 7, 0, 8, 0, 38, 6, 0, 0, 19, 28, 8, 0, 74, 0, 2, 0, 0, 0, 31, 0, 0, 41, 92, 79, 63, 102, 102, 134, 63]
+07-12 06:07:20.743 11437 11437 I ActivityDetail: RecCmd : 64
+07-12 06:07:20.744 11437 11437 E ActivityDetail: Rec Total No  : 31,    Rec Pack No : 62,    Rec RecPacketSize : 124
+07-12 06:07:20.744 11437 11437 W ActivityDetail: cmd_BLEV2_QUERY_ALL
+07-12 06:07:20.744 11437 11437 W ActivityDetail:   snDate= 220315  ,  fwversion V2.0.2
+07-12 06:07:20.744 11437 11437 W ActivityDetail:  SN.No =0704 SN.Type =RU2
+07-12 06:07:20.744 11437 11437 W ActivityDetail: modelName =RD200N
+07-12 06:07:20.744 11437 11437 W ActivityDetail: unit = 1
+07-12 06:07:20.744 11437 11437 W ActivityDetail:  alarmStatus 0
+07-12 06:07:20.744 11437 11437 W ActivityDetail:  alarmInterval = 36alarmValue148.0
+07-12 06:07:20.744 11437 11437 W ActivityDetail:  PulseCount : 7,    PulseCount 10min : 8, S_pCi : 69.0, hour : 0, M_pCi : 35.0,   L_pCi : 0.0, peak : 74.0
+07-12 06:07:20.744 11437 11437 W ActivityDetail: , time : 1574, DC_Value: 531475 Status : 2, VibStatus : 0 DataNo = 31 log checkSum0
+07-12 06:07:20.744 11437 11437 W ActivityDetail:  factor = 1.05
+07-12 06:07:20.752 11437 11437 E Chart   : Chart labelCount, data : 31,  labelCount : 6, true
+
+const array1 = [
+64, 66, 50, 50, 48, 51, 49, 53, 82, 85, 50, 48, 55, 48, 52, 6, 82, 68, 50, 48, 48, 78, 86, 50, 46, 48, 46, 50, 1, 0, 
+148, 0, 
+36, 
+69, 0, 
+35, 0, 
+0, 0, 
+7, 0, 
+8, 0, 
+38, 6, 0, 0,     26 6
+19, 28, 8, 0, 
+74, 0, 
+2, 0, 
+0, 0, 
+31, 0, 
+0, 41, 92, 79, 63, 102, 102, 134, 63];
+
+==============================
+RD200N = 52 44 32 30 30 4E
+
+==========
+Byte 00 - 	64, 66, 
+Byte 02 - 	50, 50, 48, 51, 49, 53, (32 32 30 33 31 35 / 220315)
+Byte 08 - 	82, 85, 50, (52 55 32 / RU2)
+Byte 11 - 	48, 55, 48, 52, ( 30 37 30 34 / 0704)
+Byte 15 -		6, 
+Byte 16 - 	82, 68, 50, 48, 48, 78,  (RD200N)
+Byte 22 - 	86, 50, 46, 48, 46, 50,  )56 32 2E 30 2E 32 / V2.0.2)
+Byte 28 - 	 0, (unit)
+Byte 29 - 	 0, (alarm status)
+Byte 30 - 	148, 0, 
+Byte 32 - 	 6,
+Byte 33 - 	73, 0, 
+Byte 35 -		0, 0, 
+Byte 37 -		0, 0, 
+Byte 39 - 	4, 0, 
+Byte 41 - 	13, 0, 
+Byte 43 - 	52, 0, 0, 0, 
+Byte 47 - 	122, 35, 8, 0       7A 23 8 0 (reverse byte order = 533370
+Byte 51 - 	0, 0, 
+Byte 53 - 	1, 0,
+Byte 55 - 	0, 0, 
+Byte 57 - 	0, 0, 
+Byte 59 - 	0, 41, 92, 79, 63, 102, 102, 134, 63
+
+==========
+Byte 00 - 	64, 66, 50, 50, 48, 51, 49, 53, 82, 85, 50, 48, 55, 48, 52, 6, 82, 68, 50, 48, 48, 78, 86, 50, 46, 48, 46, 50, 0, 0, 
+
+Byte 30 - 	148, 0, 
+Byte 32 - 	36,
+Byte 33 - 	59, 0, 0, 0, 0, 0, 
+Byte 39 - 	7, 0, 
+Byte 41 - 	12, 0, 
+Byte 43 - 	167, 0, 0, 0, 
+Byte 47 - 	233, 29, 8, 0      E9 1D 8 0 (reverse byte order = 531945
+Byte 51 - 	81, 0, 
+Byte 53 - 	2, 0,
+Byte 55 - 	0, 0, 
+Byte 57 - 	2, 0, 
+Byte 59 - 	0, 41, 92, 79, 63, 102, 102, 134, 63 
+
+68 bytes total (we're starting at 00 which is the first
+
+== Command ID 64 ==
+RD200Manager: send : 64
+
+00 - echo back command
+01 - length of reply
+02 - snDate (6)
+08 - SN.Type (3)
+11 - SN.No (4)
+15 - modelNameLength (1)
+16 - modelName (6)
+22 - fwversion (6)
+28 - unit (1) (whether use pci/l or bqm3)
+29 - Alarm Status (0,1)
+30,31 - Alarm Value 
+32 - Alarm Interval (1, 6, 36)
+33,34 - S_pCi (current)
+35,36 - M_pCi (1 day average)
+37,38 - L_pCi ??
+39,40 - Pulse Count
+41,42 - PulseCount 10min
+43,?? - Time
+47,48,49,50 - DC_Value (reverse bytes as hex)
+51,52 - Peak
+53 - Status (1)
+54 - VibStatus (1)
+55 - ??
+57 - DataNo (may include 58?)
+59 - 
+66-8 = 59
+
+== Missing ==
+Factor (1.05)   - 31 2E 30 35 (seems to be hard coded)
+log checkSum (always seems to be 0)
+hour (int)
+
+1d = 1440
+1h = 60
+1m = 1
+
+.. 207 10 / (CF A) / 2767 
+1d 22h 07m (2647 minutes)
+
+1440 + (1200) + 7
+
+
+== Command ID 172 ==
+RD200Manager: send : 170
+
+
+
+== Short Message from Log ==
+07-11 02:58:05.109 32517 32517 E ActivityDetail: viewModel.getRecBleData : [81, 14, 2, 0, 37, 1, 0, 0, 151, 14, 8, 0, 173, 27, 12, 64]
+07-11 02:58:05.109 32517 32517 I ActivityDetail: RecCmd : 81
+07-11 02:58:05.109 32517 32517 W ActivityDetail: Status : 2, VibStatus : 0, time : 293, DC_Value: 528023, peakValue : 2.1891892
+
+07-12 06:06:35.565 11437 11437 E ActivityDetail: DataCallBack : 81
+07-12 06:06:35.565 11437 11437 E ActivityDetail: viewModel.getRecBleData : [81, 14, 2, 0, 37, 6, 0, 0, 19, 28, 8, 0, 0, 0, 0, 64]
+07-12 06:06:35.565 11437 11437 I ActivityDetail: RecCmd : 81
+07-12 06:06:35.565 11437 11437 W ActivityDetail: Status : 2, VibStatus : 0, time : 1573, DC_Value: 531475, peakValue : 2.0
+
+00 - 81, 
+01 - 14,
+02 - 2, 
+03 - 0, 
+04 - 37, 1, 0, 0, 
+08 - 151, 14, 8, 0, 
+12 - 173, 27,   (AD 1B)
+14 - 12, 64   (0C  40)
+
+
+== Large Data ==
+07-14 01:10:50.859 31296 31296 E RD200Manager: send : 65
+07-14 01:10:50.893  3924  3924 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():3220 
+07-14 01:10:50.894  3924  3924 I GoogleInputMethodService: GoogleInputMethodService.updateDeviceLockedStatus():2116 checkRepeatedly = false, unlocked = true
+07-14 01:10:50.895  3924  3924 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1923 onStartInput(EditorInfo{inputType=0x0(NULL) imeOptions=0x0 privateImeOptions=null actionName=UNSPECIFIED actionLabel=null actionId=0 initialSelStart=-1 initialSelEnd=-1 initialCapsMode=0x0 hintText=null label=null packageName=kr.ftlab.radon_eye_v2 fieldId=2131296417 fieldName=null extras=null}, false)
+07-14 01:10:50.895  3924  3924 I GoogleInputMethodService: GoogleInputMethodService.updateDeviceLockedStatus():2116 checkRepeatedly = true, unlocked = true
+07-14 01:10:51.047  1305  1305 I cnss-daemon: nl80211 response handler invoked
+07-14 01:10:51.047  1305  1305 I cnss-daemon: nl80211_response_handler: cmd 103, vendorID 4980, subcmd 13  received
+07-14 01:10:51.047  1018  2347 I WifiHAL : event received NL80211_CMD_VENDOR, vendor_id = 0x1374, subcmd = 0xd
+07-14 01:10:51.082 31296 31296 E FTLabLogDataCallBack: onCharacteristicNotified mLOG end
+07-14 01:10:51.082 31296 31296 E RD200Manager: mGattCallback - FTLabLargeDataCallback onLogStateChanged : [B@df3b847
+07-14 01:10:51.093 31296 31296 E ActivityDetail: viewModel.getRecCMD : [
+
+78, 0, 
+69, 0, 61, 0, 58, 0, 26, 0, 11, 0, 11, 0, 12, 0, 11, 0, 9, 0, 9, 0, 11, 0, 9, 0, 18, 0, 11, 0, 29, 0, 52, 0, 55, 0, 52, 0, 39, 0, 22, 0, 58, 0, 55, 0, 64, 0, 62, 0, 59, 0, 71, 0, 39, 0, 39, 0, 49, 0, 71, 0, 59, 0, 51, 0, 65, 0, 42, 0, 59, 0, 58, 0, 85, 0, 79, 0, 54, 0, 79, 0, 69, 0, 68, 0, 68, 0, 65, 0, 48, 0, 68, 0, 69, 0, 78, 0, 74, 0, 69, 0, 65, 0, 102, 0, 85, 0, 108, 0, 94, 0, 101, 0, 81, 0, 69, 0, 71, 0, 58, 0, 69, 0, 79, 0, 64, 0, 74, 0, 52, 0, 55, 0, 72, 0, 71, 0, 51, 0, 84, 0, -124, 0, 109, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+
+07-14 01:10:51.094 31296 31296 I ActivityDetail: logDataDownloadFinish, DataNo : 74,   RecByteSize : 148
+07-14 01:10:51.094 31296 31296 E Chart   : Chart labelCount, data : 74,  labelCount : 5, false
+
+
+
+
+
+blob.slice([start[, end[, type]]])

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Radon Eye RD200 Data Viewer</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+    <link href="css/ratchet.css" rel="stylesheet">
+    <script src="js/ratchet.js"></script>
+</head>
+<body>
+    <script>
+        //BLE
+        let LBS_UUID_SERVICE = '00001523-1212-efde-1523-785feabcd123';
+        let LBS_UUID_CONTROL = '00001524-1212-efde-1523-785feabcd123';
+        let LBS_UUID_MEAS = '00001525-1212-efde-1523-785feabcd123';
+        let LBS_UUID_LOG = '00001526-1212-efde-1523-785feabcd123';
+
+        let LBS_V2_UUID_SERVICE = '00001523-0000-1000-8000-00805f9b34fb';
+        let LBS_V2_UUID_CONTROL = '00001524-0000-1000-8000-00805f9b34fb';
+        let LBS_V2_UUID_MEAS = '00001525-0000-1000-8000-00805f9b34fb';
+        let LBS_V2_UUID_LOG = '00001526-0000-1000-8000-00805f9b34fb';
+        let LBS_V2_UUID_FILTER = '0000abf0-0000-1000-8000-00805f9b34fb';
+
+        var measurementCharacteristic;
+        var controlCharacteristic;
+        var logCharacteristic;
+
+        let service = LBS_V2_UUID_SERVICE;
+
+        let serviceIdBattery = 'battery_service';
+        let characteristicBatt = 'battery_level';
+        let byteLength      = 44;
+
+        let deviceCustomService = null;
+        let batteryService = null;
+
+
+        window.onload = () => {
+            //document.getElementById('connect').onclick = connectBLE;
+            document.getElementById('connect').onclick = onConnectButtonClick;
+        }
+
+
+        function onConnectButtonClick(){
+            return (bluetoothDevice ? Promise.resolve() : requestDevice())
+            .then(connectDeviceAndCacheCharacteristics)
+            .then(_ => {
+                log('Reading Battery Level...');
+                return batteryLevelCharacteristic.readValue();
+            })
+            .catch(error => {
+                log('Argh! ' + error);
+            });
+        }
+
+        function requestDevice() {
+          log('Requesting any Bluetooth Device...');
+          return navigator.bluetooth.requestDevice({
+                filters: [
+                    {namePrefix: 'FR'},
+                    {services: [service]}
+                ]
+          .then(device => {
+            bluetoothDevice = device;
+            bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
+          });
+        }
+
+        function connectDeviceAndCacheCharacteristics() {
+          if (bluetoothDevice.gatt.connected && batteryLevelCharacteristic) {
+            return Promise.resolve();
+          }
+
+          log('Connecting to GATT Server...');
+          return bluetoothDevice.gatt.connect()
+          .then(server => {
+            log('Getting V2 Service...');
+            return server.getPrimaryService(LBS_V2_UUID_SERVICE);
+          })
+          .then(service => {
+            log('Getting V2 Control Characteristic...');
+            return service.getCharacteristic(LBS_V2_UUID_CONTROL);
+          })
+          .then(characteristic => {
+            batteryLevelCharacteristic = characteristic;
+            batteryLevelCharacteristic.addEventListener('characteristicvaluechanged',
+                handleBatteryLevelChanged);
+            document.querySelector('#startNotifications').disabled = false;
+            document.querySelector('#stopNotifications').disabled = true;
+          });
+        }
+
+
+
+
+
+
+
+
+
+
+        function connectBLE(){
+            //BLE setup. Connect and get service/characteristic notifications
+            console.log('Calling requestDevice.');
+            navigator.bluetooth.requestDevice({
+            	filters: [
+                    {namePrefix: 'FR'},
+                    {services: [service]}
+                ]
+            })
+            .then(device => device.gatt.connect())
+            //.then(server => server.getPrimaryServices(service, serviceBatt))
+            //.then(service => service[0].getCharacteristic(characteristic))
+            .then(server => server.getPrimaryService(LBS_V2_UUID_SERVICE))
+            .then(service => {
+                console.log('Getting Characteristics')
+                measurementCharacteristic = service.getCharacteristic(LBS_V2_UUID_MEAS);
+                controlCharacteristic = service.getCharacteristic(LBS_V2_UUID_CONTROL);
+                logCharacteristic = service.getCharacteristic(LBS_V2_UUID_LOG);
+                return Promise.all([measurementCharacteristic, controlCharacteristic, logCharacteristic]);
+            })
+            .then(([measurementCharacteristic, controlCharacteristic, logCharacteristic]) => {
+                //console.log('Adding Event Listener');
+                //measurementCharacteristic = characteristic;
+                //measurementCharacteristic.addEventListener('characteristicvaluechanged', handleCharacteristicValueChanged);
+                //controlCharacteristic.addEventListener('characteristicvaluechanged', handleCharacteristicValueChanged);
+                console.log('Sending Control Byte 0x50');
+                //controlCharacteristic = characteristic;
+                let controlByte = Uint8Array.of(0x50);
+                controlCharacteristic.writeValue(controlByte);
+                console.log(controlCharacteristic.readValue());
+            })
+
+
+            /*
+            .then(serviceBatt => service[1].getCharacteristic(characteristicBatt))
+            .then(characteristic => {
+                return characteristic.startNotifications()
+                .then(_ => {
+                    characteristic.addEventListener('characteristicvaluechanged',
+                                    handleCharacteristicBattValueChanged);
+                });
+            })
+            */
+            .then(_ => {
+                console.log('Notifications have been started.');
+            })
+            .catch(error => { console.log(error); });
+
+            function handleCharacteristicValueChanged(event){
+                var buffer = event.target.value.buffer;
+                var view = new DataView(buffer);
+                console.log(view);
+                revs = view.getInt32(0, true);
+                document.getElementById("revs").currentlevel =  currentlevel;
+            }
+
+            function handleCharacteristicBattValueChanged(event){
+                //var buffer = event.target.value.buffer;
+                //var view = new DataView(buffer);
+                battery = event.target.value;
+                document.getElementById("battery").innerHTML =  battery;
+            }
+
+
+
+        }
+
+        function toShort(src, startIndex){
+            startIndex = startIndex || 0;
+            return ((src[startIndex] << 8 | src[startIndex + 1]) << 16) >> 16;
+        }
+
+        function toInteger(src, startIndex){
+            startIndex = startIndex || 0;
+            return src[startIndex] << 24
+            | src[startIndex + 1] << 16
+            | src[startIndex + 2] << 8
+            | src[startIndex + 3];
+        }
+    </script>
+
+<header class="bar bar-nav">
+  <!--
+  <a class="icon icon-info pull-left" id="battery">100</a>
+-->
+  <a class="icon icon icon-search pull-right" id="connect"></a>
+  <h1 class="title">Radon Eye RD200 Data Viewer</h1>
+</header>
+
+<div class="content">
+    <ul class="table-view">
+        <li class="table-view-cell">Current Level:<span class="badge" id="currentlevel">4</span></li>
+    </ul>
+</div>
+
+
+</body>
+</html>

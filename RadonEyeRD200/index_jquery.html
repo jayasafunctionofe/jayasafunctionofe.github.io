@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RadonEye</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">   
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> 
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+</head>
+<body>
+    <script>
+        //BLE
+        let LBS_UUID_SERVICE = '00001523-1212-efde-1523-785feabcd123';
+        let LBS_UUID_CONTROL = '00001524-1212-efde-1523-785feabcd123';
+        let LBS_UUID_MEAS = '00001525-1212-efde-1523-785feabcd123';
+        let LBS_UUID_LOG = '00001526-1212-efde-1523-785feabcd123';
+
+        let LBS_V2_UUID_SERVICE = '00001523-0000-1000-8000-00805f9b34fb';
+        let LBS_V2_UUID_CONTROL = '00001524-0000-1000-8000-00805f9b34fb';
+        let LBS_V2_UUID_MEAS = '00001525-0000-1000-8000-00805f9b34fb';
+        let LBS_V2_UUID_LOG = '00001526-0000-1000-8000-00805f9b34fb';
+        let LBS_V2_UUID_FILTER = '0000abf0-0000-1000-8000-00805f9b34fb';
+
+        var bluetoothDevice;
+        var measurementCharacteristic;
+        var controlCharacteristic;
+        var logCharacteristic;
+
+        var dictMeasurementValues = {
+            snDate: "",
+            snType: "",
+            snNo: "",
+            modelName: "",
+            fwVersion: "",
+            unit : 0,
+            alarmStatus : 0,
+            alarmValue : 0.0,
+            alarmInterval : 0,
+            S_pCi : 0.0,
+            M_pCi : 0.0,
+            L_pCi : 0.0,
+            pulseCount : 0.0,
+            pulseCount10Min : 0.0,
+            time : 0,
+            dcValue : 0,
+            peak : 0.0,
+            status : 0,
+            vibStatus : 0,
+            dataNo : 0, 
+            checkSum : 0,
+            moduleFactor : 0.0,
+            factor : 0.0
+        };
+
+
+
+
+
+        window.onload = () => {
+            //document.getElementById('connect').onclick = connectBLE;
+            document.getElementById('connect').onclick = onButtonClickAwait;
+            document.getElementById('btnRefresh').onclick = onButtonClickAwait;
+        }
+
+        async function onButtonRefresh(){
+            try {
+            console.log('Writing Control Byte 0x40...');
+            let controlByte2 = Uint8Array.of(0x40);
+            const writeValue2 = await characteristicCtl.writeValueWithoutResponse(controlByte2);
+
+          } catch(error) {
+            console.log('Argh! ' + error);
+          }
+        }
+
+        async function onButtonClickAwait() {            
+          try {
+            console.log('Requesting Bluetooth Device...');
+            bluetoothDevice = await navigator.bluetooth.requestDevice(
+                {filters: [{namePrefix: 'FR'}, {services: [LBS_V2_UUID_SERVICE]}]})
+
+            console.log('Connecting to GATT Server...');
+            const server = await bluetoothDevice.gatt.connect();
+
+            console.log('Getting Main Service...');
+            const service = await server.getPrimaryService(LBS_V2_UUID_SERVICE);
+
+            console.log('Getting Measurement Characteristic...');
+            const characteristicMeas = await service.getCharacteristic(LBS_V2_UUID_MEAS);
+
+            console.log('Adding Measurement Handler...');
+            characteristicMeas.addEventListener('characteristicvaluechanged', onMeasStateChanged);
+            await characteristicMeas.startNotifications();
+    
+            console.log('Getting Control Characteristic...');
+            const characteristicCtl = await service.getCharacteristic(LBS_V2_UUID_CONTROL);
+           
+            console.log('Writing Control Byte 0xA1...');
+            let controlByte = Uint8Array.of(0xA1);
+            const writeValue = await characteristicCtl.writeValueWithoutResponse(controlByte);
+
+            setTimeout('', 5000);
+
+            console.log('Writing Control Byte 0x40...');
+            let controlByte2 = Uint8Array.of(0x40);
+            const writeValue2 = await characteristicCtl.writeValueWithoutResponse(controlByte2);
+
+          } catch(error) {
+            console.log('Argh! ' + error);
+          }
+        }
+
+        function onMeasStateChanged(event){
+            console.log('onMeasStateChanged');
+            var buffer = event.target.value.buffer;
+            console.log(buffer);
+            var view = new DataView(buffer);
+            console.log(view);
+
+            dictMeasurementValues["snDate"] = String.fromCharCode(view.getInt8(02), 
+                            view.getInt8(03),
+                            view.getInt8(04),
+                            view.getInt8(05),
+                            view.getInt8(06),
+                            view.getInt8(07)
+                  );
+
+            dictMeasurementValues["snType"] = String.fromCharCode(view.getInt8(08), 
+                            view.getInt8(09),
+                            view.getInt8(10)
+                  );
+
+            dictMeasurementValues["snNo"] = String.fromCharCode(view.getInt8(11), 
+                            view.getInt8(12),
+                            view.getInt8(13),
+                            view.getInt8(14)
+                  );
+
+            dictMeasurementValues["modelName"] = String.fromCharCode(view.getInt8(16), 
+                            view.getInt8(17),
+                            view.getInt8(18),
+                            view.getInt8(19),
+                            view.getInt8(20),
+                            view.getInt8(21)
+                  );
+
+            dictMeasurementValues["fwVersion"] = String.fromCharCode(view.getInt8(22), 
+                            view.getInt8(23),
+                            view.getInt8(24),
+                            view.getInt8(25),
+                            view.getInt8(26),
+                            view.getInt8(27)
+                  );
+
+            dictMeasurementValues["unit"] = view.getUint8(28);
+            dictMeasurementValues["alarmStatus"] = view.getUint8(29);
+            dictMeasurementValues["alarmValue"] = view.getUint8(30) + (view.getUint8(31) / 100);
+            dictMeasurementValues["alarmInterval"] = view.getUint8(32);
+            dictMeasurementValues["S_pCi"] = view.getUint8(33) + (view.getUint8(34) / 100);
+            dictMeasurementValues["M_pCi"] = view.getUint8(35) + (view.getUint8(36) / 100);
+            dictMeasurementValues["L_pCi"] = view.getUint8(37) + (view.getUint8(38) / 100);
+            dictMeasurementValues["pulseCount"] = view.getUint8(39) + (view.getUint8(40) / 100);
+            dictMeasurementValues["pulseCount10Min"] = view.getUint8(41) + (view.getUint8(42) / 100);
+            dictMeasurementValues["time"] = view.getUint32(43,true);
+            dictMeasurementValues["dcValue"] = view.getUint32(47,true);
+            dictMeasurementValues["peak"] = view.getUint8(51) + (view.getUint8(52) / 100);
+            dictMeasurementValues["status"] = view.getUint8(53);
+            dictMeasurementValues["vibStatus"] = view.getUint8(54);
+            dictMeasurementValues["dataNo"] = view.getUint16(57);
+            dictMeasurementValues["checksum"] = view.getUint8(59);
+            dictMeasurementValues["moduleFactor"] = view.getFloat32(60, true);
+            dictMeasurementValues["factor"] = view.getFloat32(64, true);
+
+            document.getElementById("connectedStatus").innerHTML = "Connected <span class=\"ui-li-aside\" id=\"currentLevel\"></span>";
+            if (dictMeasurementValues["S_pCi"] < 100) {
+                document.getElementById("connectedStatus").style.backgroundColor  = "lightgreen";
+            } else if (dictMeasurementValues["S_pCi"] < 150) {
+                document.getElementById("connectedStatus").style.backgroundColor  = "lightyellow";
+            } else //S_pCi > 150
+            {
+                document.getElementById("connectedStatus").style.backgroundColor  = "lightred";
+            }
+
+            // Bq/m
+            document.getElementById("currentLevel").innerHTML = dictMeasurementValues["S_pCi"] + ' Bq/m&#179; (' + (dictMeasurementValues["S_pCi"]/37).toFixed(2) + ' pCi/&#8467;)';            
+
+            var timeDelta = dictMeasurementValues["time"];
+            var days = Math.floor(timeDelta/1440);
+            timeDelta -= days * 1440;
+            var hrs = Math.floor(timeDelta/60);
+            timeDelta -= hrs * 60;
+            var mins = timeDelta;
+            document.getElementById("measurementTime").innerHTML = days + 'd ' + hrs + 'h ' + mins + 'm';
+            
+   
+            document.getElementById("peakValue").innerHTML = dictMeasurementValues["peak"] 
+            + ' Bq/m&#179; (' + (dictMeasurementValues["peak"]/37).toFixed(2) + ' pCi/&#8467;)';
+            document.getElementById("oneDayAverage").innerHTML = dictMeasurementValues["M_pCi"] 
+            + ' Bq/m&#179; (' + (dictMeasurementValues["M_pCi"]/37).toFixed(2) + ' pCi/&#8467;)';
+
+            let debugString = 'snDate = ' + dictMeasurementValues["snDate"] + 
+            ' , fwversion ' + dictMeasurementValues["fwVersion"] + '\n' + 
+            'SN.No = ' + dictMeasurementValues["snNo"] + ' , SN.Type ' + dictMeasurementValues["snType"] + '\n' + 
+            'ModelName = ' + dictMeasurementValues["modelName"] + '\n' + 
+            'unit = ' + dictMeasurementValues["unit"] + '\n' + 
+            'alarmStatus ' + dictMeasurementValues["alarmStatus"] + '\n' + 
+            'alarmInterval ' + dictMeasurementValues["alarmInterval"] + ' alarmValue ' + dictMeasurementValues["alarmValue"] + '\n' + 
+            'PulseCount : ' + dictMeasurementValues["pulseCount"] + 
+            ' , PulseCount 10min : ' + dictMeasurementValues["pulseCount10Min"] + ' , S_pCi : ' + dictMeasurementValues["S_pCi"] + '\n' +
+            ' , hour : ' + 'tbd' + ' , M_pCi : ' + dictMeasurementValues["M_pCi"] + 
+            ' , L_pCi : ' + dictMeasurementValues["L_pCi"] + ' , peak: ' + dictMeasurementValues["peak"] + '\n' + 
+            ' , time : ' + dictMeasurementValues["time"] + ' , DC_Value : ' + dictMeasurementValues["dcValue"] + ' , Status : ' + dictMeasurementValues["status"] + '\n' +
+            ' , VibStatus : ' + dictMeasurementValues["vibStatus"] + ' , DataNo : ' + dictMeasurementValues["dataNo"] + ' , logChecksum : ' + dictMeasurementValues["dataNo"] + '\n' +
+            ', factor : ' + dictMeasurementValues["factor"];
+
+            document.getElementById("debugString").innerHTML = debugString;
+
+        }
+    </script>
+
+<div data-role="page" id="mainPage">
+    <div data-role="header">
+        <h1>RadonEye</h1>
+        <a href="#" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-search" id="connect">Connect</a>
+        <a href="#settingsPage" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-gear">&nbsp;</a>
+    </div><!-- /header -->
+    <div role="main" class="ui-content">
+        <ul data-role="listview" data-count-theme="b" data-inset="true">
+            <li data-role="list-divider">Radon Level</li>
+            <li id="connectedStatus">Disconnected <span class="ui-li-aside" id="currentLevel">6 pCi/&#8467;</span></li>
+            <li data-role="list-divider">Details</li>
+            <li>Measurement Time <span class="ui-li-aside" id="measurementTime">6</span></li>
+            <li>Peak Value <span class="ui-li-aside" id="peakValue">6</span></li>
+            <li>One Day Average <span class="ui-li-aside" id="oneDayAverage">6</span></li>
+        </ul>
+    </div><!-- /content -->
+    <div data-role="footer">
+        <a href="#" id="btnRefresh" class="ui-btn ui-corner-all ui-btn-inline ui-mini footer-button-right ui-btn-icon-right ui-icon-refresh">&nbsp;</a>
+    </div><!-- /footer -->
+</div><!-- /page -->
+<!-- Page 2 -->
+<div data-role="page" id="settingsPage">
+    <div data-role="header">
+        <h1>Settings</h1>
+        <a href="#" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-search">Pair</a>
+        <a href="#mainPage" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-gear">&nbsp;</a>
+    </div><!-- /header -->
+    <div role="main" class="ui-content">
+        <ul data-role="listview" data-count-theme="b" data-inset="true">
+            <li data-role="list-divider">Radon Level</li>
+            <li><a href="#">Disconnected <span class="ui-li-count" id="currentLevel"></span></a></li>
+            <li data-role="list-divider">Details</li>
+            <li><a href="#">Measurement Time <span class="ui-li-count" id="measurementTime"></span></a></li>
+            <li><a href="#">Peak Value <span class="ui-li-count" id="peakValue"></span></a></li>
+            <li><a href="#">One Day Average <span class="ui-li-count" id="oneDayAverage"></span></a></li>
+        </ul>
+        <div data-role="collapsible">
+            <h2>Raw Log Info</h2>
+            <ul data-role="listview" data-divider-theme="b">
+                <li>
+                   <p>
+                       <textarea cols="40" rows="8" name="textarea-18" id="debugString">Text</textarea>
+                   </p>
+                </li>
+            </ul>
+        </div>
+        <div data-role="collapsible">
+            <h2>Raw Log Info</h2>
+            <ul data-role="listview" data-divider-theme="b">
+                <li>
+                   <p>
+                        <label for="text-basic">Text input:</label>
+                        <input type="text" name="text-basic" id="byte string" value="">
+                        <label for="textarea">Textarea:</label>
+                        <textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
+                        <button class="ui-btn">Button</button>
+                   </p>
+                </li>
+            </ul>
+        </div>
+    </div><!-- /content -->
+    <div data-role="footer">
+        <h4>Page Footer</h4>
+    </div><!-- /footer -->
+</div><!-- /page -->
+</body>
+</html>

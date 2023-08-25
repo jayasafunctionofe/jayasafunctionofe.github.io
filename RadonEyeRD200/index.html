@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RadonEye</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+    <link href="css/ratchet.css" rel="stylesheet">
+    <script src="js/ratchet.js"></script>
+</head>
+<body>
+    <script>
+        //BLE
+        let LBS_UUID_SERVICE = '00001523-1212-efde-1523-785feabcd123';
+        let LBS_UUID_CONTROL = '00001524-1212-efde-1523-785feabcd123';
+        let LBS_UUID_MEAS = '00001525-1212-efde-1523-785feabcd123';
+        let LBS_UUID_LOG = '00001526-1212-efde-1523-785feabcd123';
+
+        let LBS_V2_UUID_SERVICE = '00001523-0000-1000-8000-00805f9b34fb';
+        let LBS_V2_UUID_CONTROL = '00001524-0000-1000-8000-00805f9b34fb';
+        let LBS_V2_UUID_MEAS = '00001525-0000-1000-8000-00805f9b34fb';
+        let LBS_V2_UUID_LOG = '00001526-0000-1000-8000-00805f9b34fb';
+        let LBS_V2_UUID_FILTER = '0000abf0-0000-1000-8000-00805f9b34fb';
+
+        var bluetoothDevice;
+        var measurementCharacteristic;
+        var controlCharacteristic;
+        var logCharacteristic;
+
+        window.onload = () => {
+            //document.getElementById('connect').onclick = connectBLE;
+            document.getElementById('connect').onclick = onButtonClickAwait;            
+        }
+
+
+        async function onButtonClickAwait() {            
+          try {
+            console.log('Requesting Bluetooth Device...');
+            const device = await navigator.bluetooth.requestDevice(
+                {filters: [{namePrefix: 'FR'}, {services: [LBS_V2_UUID_SERVICE]}]})
+
+            console.log('Connecting to GATT Server...');
+            const server = await device.gatt.connect();
+
+            console.log('Getting Main Service...');
+            const service = await server.getPrimaryService(LBS_V2_UUID_SERVICE);
+
+            console.log('Getting Measurement Characteristic...');
+            const characteristicMeas = await service.getCharacteristic(LBS_V2_UUID_MEAS);
+
+            console.log('Adding Measurement Handler...');
+            //const readValueMeas = await characteristicMeas.readValue();
+            characteristicMeas.addEventListener('characteristicvaluechanged', onMeasStateChanged);
+            await characteristicMeas.startNotifications();
+    
+            console.log('Getting Control Characteristic...');
+            const characteristicCtl = await service.getCharacteristic(LBS_V2_UUID_CONTROL);
+           
+            console.log('Writing Control Byte 0xA1...');
+            let controlByte = Uint8Array.of(0xA1);
+            const writeValue = await characteristicCtl.writeValueWithoutResponse(controlByte);
+
+            setTimeout('', 5000);
+
+            console.log('Writing Control Byte 0x40...');
+            let controlByte2 = Uint8Array.of(0x40);
+            const writeValue2 = await characteristicCtl.writeValueWithoutResponse(controlByte2);
+
+          } catch(error) {
+            console.log('Argh! ' + error);
+          }
+        }
+
+        function onMeasStateChanged(event){
+            console.log('onMeasStateChanged');
+            var buffer = event.target.value.buffer;
+            console.log(buffer);
+            var view = new DataView(buffer);
+            console.log(view);
+
+            snDate = String.fromCharCode(view.getInt8(02), 
+                            view.getInt8(03),
+                            view.getInt8(04),
+                            view.getInt8(05),
+                            view.getInt8(06),
+                            view.getInt8(07)
+                  );
+
+            snType = String.fromCharCode(view.getInt8(08), 
+                            view.getInt8(09),
+                            view.getInt8(10)
+                  );
+
+            snNo = String.fromCharCode(view.getInt8(11), 
+                            view.getInt8(12),
+                            view.getInt8(13),
+                            view.getInt8(14)
+                  );
+
+            modelName = String.fromCharCode(view.getInt8(16), 
+                            view.getInt8(17),
+                            view.getInt8(18),
+                            view.getInt8(19),
+                            view.getInt8(20),
+                            view.getInt8(21)
+                  );
+
+            fwVersion = String.fromCharCode(view.getInt8(22), 
+                            view.getInt8(23),
+                            view.getInt8(24),
+                            view.getInt8(25),
+                            view.getInt8(26),
+                            view.getInt8(27)
+                  );
+
+            unit = view.getUint8(28);
+            alarmStatus = view.getUint8(29);
+            alarmValue = view.getUint8(30) + (view.getUint8(31) / 100);
+            alarmInterval = view.getUint8(32);
+            S_pCi = view.getUint8(33) + (view.getUint8(34) / 100);
+            M_pCi = view.getUint8(35) + (view.getUint8(36) / 100);
+            L_pCi = view.getUint8(37) + (view.getUint8(38) / 100);
+            pulseCount = view.getUint8(39) + (view.getUint8(40) / 100);
+            pulseCount10Min = view.getUint8(41) + (view.getUint8(42) / 100);
+            time = view.getUint32(43,true);
+            dcValue = view.getUint32(47,true);
+            peak = view.getUint8(51) + (view.getUint8(52) / 100);
+            status = view.getUint8(53);
+            vibStatus = view.getUint8(54);
+            dataNo = view.getUint8(57);
+
+            document.getElementById("currentLevel").innerHTML = S_pCi;
+            document.getElementById("measurementTime").innerHTML = time;
+            document.getElementById("peakValue").innerHTML = peak;
+            document.getElementById("oneDayAverage").innerHTML = M_pCi;
+
+
+
+
+
+        }
+    </script>
+
+<header class="bar bar-nav">
+  <!--
+  <a class="icon icon-info pull-left" id="battery">100</a>
+-->
+  <a class="icon icon icon-search pull-left" id="connect"></a>
+  <a href="#myModalexample" class="icon icon icon-gear pull-right"></a>
+  <h1 class="title">RadonEye</h1>
+</header>
+
+  <div class="content">
+    <p class="content-padded">The contents of my modal go here.</p>
+  </div>
+</div>
+
+<div class="content">
+    <ul class="table-view">
+        <li class="table-view-cell table-view-divider">Radon Level</li>
+        <li class="table-view-cell">Disconnected <span class="badge" id="currentLevel">4</span></li>
+        <li class="table-view-cell table-view-divider">Details</li>
+        <li class="table-view-cell">Measurement Time <span class="badge" id="measurementTime">5</span></li>
+        <li class="table-view-cell">Peak Value <span class="badge" id="peakValue">5</span></li>
+        <li class="table-view-cell">1 Day Average <span class="badge" id="oneDayAverage">5</span></li>
+    </ul>
+</div>
+
+
+
+</body>
+</html>

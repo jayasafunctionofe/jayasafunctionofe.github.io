@@ -1,6 +1,7 @@
 ## FidgetlyCTRL - Web Bluetooth API
 
 **BLE Service ID:** 78adb061-470e-405d-a44d-817e559c8839
+
 **BLE Custom Characteristic**: e779f296-27f6-461b-8f96-6b0c3804bfc3
 
 

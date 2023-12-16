@@ -39,4 +39,6 @@
 > revolutions * 0.154
 
 **Speed** - meters per hour
-> (rpm / 60) * 0.154 * 2.24
+> ( (rpm / 60) * 0.154 * 2.24 ) * 1.609 * 1000
+> 
+> in the app code they are converting it to miles first, then to kilometers, then meters.
